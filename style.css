@@ -73,3 +73,14 @@ body {
     align-items: center;
     font-size: 3rem;
 }
+
+/* Survol des cases */
+.case:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+}
+
+/* Pièce sélectionnée */
+.piece.selectionnee {
+    transform: scale(1.2);
+    z-index: 10;
+}
