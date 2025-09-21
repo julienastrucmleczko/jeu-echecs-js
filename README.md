@@ -29,3 +29,5 @@ Je te conseille vraiment de télécharger les fichiers et de les lancer
 via un éditeur comme VSCODE car perso de mon côté j'ai eu pas mal
 de soucis en clonant le git sur mon pc, j'ai eu du mal à lier les 
 fichiers entre eux.
+# UTILISER UN NAVIGATEUR COMPATIBLE AVEC LES SYMBOLES UNICODE 
+# (perso j'utilise brave et tout est parfaitement lisible)

@@ -1,3 +1,4 @@
+/* Styles pour le jeu d'échecs */
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -9,11 +10,11 @@ body {
     background-color: #f0f0f0;
 }
 
-.container {
+.conteneur {
     text-align: center;
 }
 
-.chessboard {
+.echiquier {
     display: grid;
     grid-template-columns: repeat(8, 60px);
     grid-template-rows: repeat(8, 60px);
@@ -22,79 +23,60 @@ body {
     margin: 20px auto;
 }
 
-.square {
+.case {
     width: 60px;
     height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.white { background-color: #f0d9b5; }
-.black { background-color: #b58863; }
-
-
-/* Pièces d'échecs */
-.piece {
-    width: 80%;
-    height: 80%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     cursor: pointer;
+    position: relative;
 }
 
-/* Pièces noires */
-.piece.noire {
-    color: black;
+.blanc {
+    background-color: #f0d9b5;
 }
-.piece.noire.tour::before { content: "♜"; }
-.piece.noire.cavalier::before { content: "♞"; }
-.piece.noire.fou::before { content: "♝"; }
-.piece.noire.dame::before { content: "♛"; }
-.piece.noire.roi::before { content: "♚"; }
-.piece.noire.pion::before { content: "♟"; }
 
-/* Pièces blanches */
-.piece.blanche {
+.noir {
+    background-color: #b58863;
+}
+
+.piece {
+    font-size: 45px;
+    cursor: grab;
+    user-select: none;
+    position: absolute;
+}
+
+.selectionnee {
+    background-color: rgba(255, 255, 0, 0.5);
+}
+
+.mouvement-possible {
+    background-color: rgba(0, 255, 0, 0.3);
+}
+
+.statut {
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.indicateur-tour {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#bouton-reinitialiser {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
     color: white;
-}
-.piece.blanche.tour::before { content: "♖"; }
-.piece.blanche.cavalier::before { content: "♘"; }
-.piece.blanche.fou::before { content: "♗"; }
-.piece.blanche.dame::before { content: "♕"; }
-.piece.blanche.roi::before { content: "♔"; }
-.piece.blanche.pion::before { content: "♙"; }
-
-/* Style des cases */
-.case {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
+    border: none;
+    border-radius: 4px;
 }
 
-/* Survol des cases */
-.case:hover {
-    box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
-}
-
-/* Pièce sélectionnée */
-.piece.selectionnee {
-    transform: scale(1.2);
-    z-index: 10;
-}
-
-/* Ajout pour le Commit 4 */
-.echec {
-    background-color: rgba(255, 0, 0, 0.5) !important;
-}
-
-/* Commit 5 */
-.echec {
-    background-color: rgba(255, 0, 0, 0.5) !important;
-}
-
-.mat {
-    background-color: rgba(255, 0, 0, 0.8) !important;
+#bouton-reinitialiser:hover {
+    background-color: #45a049;
 }
