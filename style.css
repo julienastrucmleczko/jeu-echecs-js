@@ -32,3 +32,44 @@ body {
 
 .white { background-color: #f0d9b5; }
 .black { background-color: #b58863; }
+
+
+/* Pièces d'échecs */
+.piece {
+    width: 80%;
+    height: 80%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+/* Pièces noires */
+.piece.noire {
+    color: black;
+}
+.piece.noire.tour::before { content: "♜"; }
+.piece.noire.cavalier::before { content: "♞"; }
+.piece.noire.fou::before { content: "♝"; }
+.piece.noire.dame::before { content: "♛"; }
+.piece.noire.roi::before { content: "♚"; }
+.piece.noire.pion::before { content: "♟"; }
+
+/* Pièces blanches */
+.piece.blanche {
+    color: white;
+}
+.piece.blanche.tour::before { content: "♖"; }
+.piece.blanche.cavalier::before { content: "♘"; }
+.piece.blanche.fou::before { content: "♗"; }
+.piece.blanche.dame::before { content: "♕"; }
+.piece.blanche.roi::before { content: "♔"; }
+.piece.blanche.pion::before { content: "♙"; }
+
+/* Style des cases */
+.case {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+}
