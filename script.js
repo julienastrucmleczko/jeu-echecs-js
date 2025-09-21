@@ -1,45 +1,49 @@
+// script.js - Commit 5 : Détection d'échec et mat
+
 document.addEventListener('DOMContentLoaded', () => {
     const echiquier = document.getElementById('echiquier');
+    const statusElement = document.getElementById('status');
     const lettres = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     const chiffres = [8, 7, 6, 5, 4, 3, 2, 1];
 
-    // Positions initiales des pièces
     let pieces = {
-        'a8': { type: 'tour',   couleur: 'noir', symbole: '♜' },
-        'b8': { type: 'cavalier', couleur: 'noir', symbole: '♞' },
-        'c8': { type: 'fou',    couleur: 'noir', symbole: '♝' },
-        'd8': { type: 'dame',   couleur: 'noir', symbole: '♛' },
-        'e8': { type: 'roi',    couleur: 'noir', symbole: '♚' },
-        'f8': { type: 'fou',    couleur: 'noir', symbole: '♝' },
-        'g8': { type: 'cavalier', couleur: 'noir', symbole: '♞' },
-        'h8': { type: 'tour',   couleur: 'noir', symbole: '♜' },
-        'a7': { type: 'pion',   couleur: 'noir', symbole: '♟' },
-        'b7': { type: 'pion',   couleur: 'noir', symbole: '♟' },
-        'c7': { type: 'pion',   couleur: 'noir', symbole: '♟' },
-        'd7': { type: 'pion',   couleur: 'noir', symbole: '♟' },
-        'e7': { type: 'pion',   couleur: 'noir', symbole: '♟' },
-        'f7': { type: 'pion',   couleur: 'noir', symbole: '♟' },
-        'g7': { type: 'pion',   couleur: 'noir', symbole: '♟' },
-        'h7': { type: 'pion',   couleur: 'noir', symbole: '♟' },
-        'a2': { type: 'pion',   couleur: 'blanc', symbole: '♙' },
-        'b2': { type: 'pion',   couleur: 'blanc', symbole: '♙' },
-        'c2': { type: 'pion',   couleur: 'blanc', symbole: '♙' },
-        'd2': { type: 'pion',   couleur: 'blanc', symbole: '♙' },
-        'e2': { type: 'pion',   couleur: 'blanc', symbole: '♙' },
-        'f2': { type: 'pion',   couleur: 'blanc', symbole: '♙' },
-        'g2': { type: 'pion',   couleur: 'blanc', symbole: '♙' },
-        'h2': { type: 'pion',   couleur: 'blanc', symbole: '♙' },
-        'a1': { type: 'tour',   couleur: 'blanc', symbole: '♖' },
-        'b1': { type: 'cavalier', couleur: 'blanc', symbole: '♘' },
-        'c1': { type: 'fou',    couleur: 'blanc', symbole: '♗' },
-        'd1': { type: 'dame',   couleur: 'blanc', symbole: '♕' },
-        'e1': { type: 'roi',    couleur: 'blanc', symbole: '♔' },
-        'f1': { type: 'fou',    couleur: 'blanc', symbole: '♗' },
-        'g1': { type: 'cavalier', couleur: 'blanc', symbole: '♘' },
-        'h1': { type: 'tour',   couleur: 'blanc', symbole: '♖' }
+        'a8': { type: 'tour', couleur: 'noir', symbole: '♜', aBouge: false },
+        'b8': { type: 'cavalier', couleur: 'noir', symbole: '♞', aBouge: false },
+        'c8': { type: 'fou', couleur: 'noir', symbole: '♝', aBouge: false },
+        'd8': { type: 'dame', couleur: 'noir', symbole: '♛', aBouge: false },
+        'e8': { type: 'roi', couleur: 'noir', symbole: '♚', aBouge: false },
+        'f8': { type: 'fou', couleur: 'noir', symbole: '♝', aBouge: false },
+        'g8': { type: 'cavalier', couleur: 'noir', symbole: '♞', aBouge: false },
+        'h8': { type: 'tour', couleur: 'noir', symbole: '♜', aBouge: false },
+        'a7': { type: 'pion', couleur: 'noir', symbole: '♟', aBouge: false },
+        'b7': { type: 'pion', couleur: 'noir', symbole: '♟', aBouge: false },
+        'c7': { type: 'pion', couleur: 'noir', symbole: '♟', aBouge: false },
+        'd7': { type: 'pion', couleur: 'noir', symbole: '♟', aBouge: false },
+        'e7': { type: 'pion', couleur: 'noir', symbole: '♟', aBouge: false },
+        'f7': { type: 'pion', couleur: 'noir', symbole: '♟', aBouge: false },
+        'g7': { type: 'pion', couleur: 'noir', symbole: '♟', aBouge: false },
+        'h7': { type: 'pion', couleur: 'noir', symbole: '♟', aBouge: false },
+
+        'a2': { type: 'pion', couleur: 'blanc', symbole: '♙', aBouge: false },
+        'b2': { type: 'pion', couleur: 'blanc', symbole: '♙', aBouge: false },
+        'c2': { type: 'pion', couleur: 'blanc', symbole: '♙', aBouge: false },
+        'd2': { type: 'pion', couleur: 'blanc', symbole: '♙', aBouge: false },
+        'e2': { type: 'pion', couleur: 'blanc', symbole: '♙', aBouge: false },
+        'f2': { type: 'pion', couleur: 'blanc', symbole: '♙', aBouge: false },
+        'g2': { type: 'pion', couleur: 'blanc', symbole: '♙', aBouge: false },
+        'h2': { type: 'pion', couleur: 'blanc', symbole: '♙', aBouge: false },
+        'a1': { type: 'tour', couleur: 'blanc', symbole: '♖', aBouge: false },
+        'b1': { type: 'cavalier', couleur: 'blanc', symbole: '♘', aBouge: false },
+        'c1': { type: 'fou', couleur: 'blanc', symbole: '♗', aBouge: false },
+        'd1': { type: 'dame', couleur: 'blanc', symbole: '♕', aBouge: false },
+        'e1': { type: 'roi', couleur: 'blanc', symbole: '♔', aBouge: false },
+        'f1': { type: 'fou', couleur: 'blanc', symbole: '♗', aBouge: false },
+        'g1': { type: 'cavalier', couleur: 'blanc', symbole: '♘', aBouge: false },
+        'h1': { type: 'tour', couleur: 'blanc', symbole: '♖', aBouge: false }
     };
 
-    let tourActuel = 'blanc'; // Commence avec les blancs
+    let pieceSelectionnee = null;
+    let tourActuel = 'blanc';
 
     // Fonction pour créer l'échiquier
     function creerEchiquier() {
@@ -48,41 +52,65 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let j = 0; j < 8; j++) {
                 const caseElement = document.createElement('div');
                 caseElement.classList.add('case');
+                caseElement.classList.add((i + j) % 2 === 0 ? 'blanche' : 'noire');
+
                 const position = lettres[j] + chiffres[i];
-                if ((i + j) % 2 === 0) {
-                    caseElement.classList.add('blanche');
-                } else {
-                    caseElement.classList.add('noire');
-                }
                 caseElement.dataset.position = position;
 
-                // Ajouter la pièce si elle existe
                 if (pieces[position]) {
                     const pieceElement = document.createElement('div');
                     pieceElement.classList.add('piece');
                     pieceElement.textContent = pieces[position].symbole;
-                    pieceElement.dataset.couleur = pieces[position].couleur;
-                    pieceElement.dataset.type = pieces[position].type;
                     caseElement.appendChild(pieceElement);
                 }
 
                 echiquier.appendChild(caseElement);
             }
         }
+
+        // Mettre en surbrillance les cases en échec
+        const roiBlancPos = trouverRoi('blanc');
+        const roiNoirPos = trouverRoi('noir');
+
+        if (roiEnEchec('blanc')) {
+            document.querySelector(`.case[data-position="${roiBlancPos}"]`).classList.add('echec');
+        }
+        if (roiEnEchec('noir')) {
+            document.querySelector(`.case[data-position="${roiNoirPos}"]`).classList.add('echec');
+        }
+
+        // Mettre à jour le statut
+        statusElement.textContent = `Tour des ${tourActuel}s`;
+        if (roiEnEchecEtMat('blanc')) {
+            statusElement.textContent = 'Échec et mat ! Les noirs gagnent.';
+        } else if (roiEnEchecEtMat('noir')) {
+            statusElement.textContent = 'Échec et mat ! Les blancs gagnent.';
+        } else if (roiEnEchec('blanc')) {
+            statusElement.textContent = 'Échec pour les blancs !';
+        } else if (roiEnEchec('noir')) {
+            statusElement.textContent = 'Échec pour les noirs !';
+        }
+    }
+
+    // Fonction pour trouver la position du roi
+    function trouverRoi(couleur) {
+        for (const position in pieces) {
+            if (pieces[position].type === 'roi' && pieces[position].couleur === couleur) {
+                return position;
+            }
+        }
+        return null;
     }
 
     // Fonction pour vérifier si le roi est en échec
     function roiEnEchec(couleur) {
-        const roiPosition = Object.keys(pieces).find(
-            pos => pieces[pos].type === 'roi' && pieces[pos].couleur === couleur
-        );
+        const roiPos = trouverRoi(couleur);
+        if (!roiPos) return false;
 
-        if (!roiPosition) return false;
-
-        // Vérifier si une pièce adverse attaque le roi
-        for (const [position, piece] of Object.entries(pieces)) {
-            if (piece.couleur !== couleur) {
-                if (estMouvementValide(position, roiPosition, piece.type)) {
+        for (const position in pieces) {
+            if (pieces[position].couleur !== couleur) {
+                const typePiece = pieces[position].type;
+                if (estMouvementValide(position, roiPos, typePiece, true)) {
                     return true;
                 }
             }
@@ -90,44 +118,128 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
 
-    // Fonction pour vérifier si un mouvement est valide selon le type de pièce
-    function estMouvementValide(de, a, typePiece) {
-        const deCol = de.charAt(0);
-        const deLig = parseInt(de.charAt(1));
-        const aCol = a.charAt(0);
-        const aLig = parseInt(a.charAt(1));
+    // Fonction pour vérifier si le roi est en échec et mat
+    function roiEnEchecEtMat(couleur) {
+        if (!roiEnEchec(couleur)) return false;
 
-        const colDiff = Math.abs(aCol.charCodeAt(0) - deCol.charCodeAt(0));
-        const ligDiff = Math.abs(aLig - deLig);
+        // Vérifier si un mouvement peut sortir le roi de l'échec
+        for (const position in pieces) {
+            if (pieces[position].couleur === couleur) {
+                const typePiece = pieces[position].type;
+                for (const cible in pieces) {
+                    if (pieces[cible].couleur !== couleur || cible === position) {
+                        if (estMouvementValide(position, cible, typePiece)) {
+                            // Simuler le mouvement
+                            const pieceDeplacee = pieces[position];
+                            const pieceCible = pieces[cible];
+                            delete pieces[position];
+                            pieces[cible] = pieceDeplacee;
 
+                            const estEnEchec = roiEnEchec(couleur);
+
+                            // Annuler le mouvement
+                            delete pieces[cible];
+                            pieces[position] = pieceDeplacee;
+                            if (pieceCible) pieces[cible] = pieceCible;
+
+                            if (!estEnEchec) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    // Fonction pour vérifier si un mouvement est valide
+    function estMouvementValide(depart, arrivee, typePiece, simulation = false) {
+        const departX = lettres.indexOf(depart[0]);
+        const departY = 8 - parseInt(depart[1]);
+        const arriveeX = lettres.indexOf(arrivee[0]);
+        const arriveeY = 8 - parseInt(arrivee[1]);
+
+        const dx = arriveeX - departX;
+        const dy = arriveeY - departY;
+
+        const pieceDepart = pieces[depart];
+        const pieceArrivee = pieces[arrivee];
+
+        // Vérifier si la pièce de départ existe
+        if (!pieceDepart) return false;
+
+        // Vérifier si la pièce d'arrivée est de la même couleur
+        if (pieceArrivee && pieceArrivee.couleur === pieceDepart.couleur) return false;
+
+        // Logique spécifique à chaque type de pièce
         switch (typePiece) {
             case 'pion':
-                // Logique simplifiée pour les pions
-                if (pieces[de].couleur === 'blanc') {
-                    return (aCol === deCol && aLig === deLig + 1) || // Avancer d'une case
-                           (aCol === deCol && deLig === 2 && aLig === 4); // Premier coup (2 cases)
-                } else {
-                    return (aCol === deCol && aLig === deLig - 1) ||
-                           (aCol === deCol && deLig === 7 && aLig === 5);
+                const direction = pieceDepart.couleur === 'blanc' ? 1 : -1;
+                // Mouvement vers l'avant
+                if (dx === 0 && dy === direction && !pieceArrivee) {
+                    return true;
                 }
+                // Premier mouvement de deux cases
+                if (dx === 0 && dy === 2 * direction && !pieceDepart.aBouge && !pieceArrivee && !pieces[lettres[departX] + (chiffres[departY - direction])]) {
+                    return true;
+                }
+                // Capture en diagonale
+                if (Math.abs(dx) === 1 && dy === direction && pieceArrivee) {
+                    return true;
+                }
+                return false;
+
             case 'tour':
-                return (deCol === aCol || deLig === aLig); // Même colonne ou ligne
+                if (dx === 0 || dy === 0) {
+                    if (dx === 0 && dy === 0) return false; // Pas de mouvement
+                    const stepX = dx === 0 ? 0 : dx / Math.abs(dx);
+                    const stepY = dy === 0 ? 0 : dy / Math.abs(dy);
+                    for (let i = 1; i < Math.max(Math.abs(dx), Math.abs(dy)); i++) {
+                        const posIntermediaire = lettres[departX + i * stepX] + chiffres[departY + i * stepY];
+                        if (pieces[posIntermediaire]) return false;
+                    }
+                    return true;
+                }
+                return false;
+
             case 'cavalier':
-                return (colDiff === 2 && ligDiff === 1) || (colDiff === 1 && ligDiff === 2);
+                return (Math.abs(dx) === 2 && Math.abs(dy) === 1) || (Math.abs(dx) === 1 && Math.abs(dy) === 2);
+
             case 'fou':
-                return colDiff === ligDiff; // Diagonale
+                if (Math.abs(dx) === Math.abs(dy)) {
+                    const stepX = dx / Math.abs(dx);
+                    const stepY = dy / Math.abs(dy);
+                    for (let i = 1; i < Math.abs(dx); i++) {
+                        const posIntermediaire = lettres[departX + i * stepX] + chiffres[departY + i * stepY];
+                        if (pieces[posIntermediaire]) return false;
+                    }
+                    return true;
+                }
+                return false;
+
             case 'dame':
-                return (deCol === aCol || deLig === aLig || colDiff === ligDiff);
+                if ((dx === 0 || dy === 0) || (Math.abs(dx) === Math.abs(dy))) {
+                    if (dx === 0 && dy === 0) return false; // Pas de mouvement
+                    const stepX = dx === 0 ? 0 : dx / Math.abs(dx);
+                    const stepY = dy === 0 ? 0 : dy / Math.abs(dy);
+                    for (let i = 1; i < Math.max(Math.abs(dx), Math.abs(dy)); i++) {
+                        const posIntermediaire = lettres[departX + i * stepX] + chiffres[departY + i * stepY];
+                        if (pieces[posIntermediaire]) return false;
+                    }
+                    return true;
+                }
+                return false;
+
             case 'roi':
-                return colDiff <= 1 && ligDiff <= 1; // Une case dans n'importe quelle direction
+                return Math.abs(dx) <= 1 && Math.abs(dy) <= 1;
+
             default:
                 return false;
         }
     }
 
-    // Gestion des clics pour déplacer les pièces
-    let pieceSelectionnee = null;
-
+    // Gestion des clics sur les cases
     echiquier.addEventListener('click', (e) => {
         const caseCliquee = e.target.closest('.case');
         if (!caseCliquee) return;
@@ -135,29 +247,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const position = caseCliquee.dataset.position;
 
         if (pieceSelectionnee) {
-            // Essayer de déplacer la pièce
             if (pieces[position] && pieces[position].couleur === pieces[pieceSelectionnee].couleur) {
-                // Sélectionner une autre pièce de la même couleur
                 pieceSelectionnee = position;
                 return;
             }
 
-            // Vérifier si le mouvement est valide
             const typePiece = pieces[pieceSelectionnee].type;
             if (estMouvementValide(pieceSelectionnee, position, typePiece)) {
-                // Déplacer la pièce
-                const piece = pieces[pieceSelectionnee];
+                // Simuler le mouvement pour vérifier l'échec
+                const pieceDeplacee = pieces[pieceSelectionnee];
+                const pieceCible = pieces[position];
                 delete pieces[pieceSelectionnee];
-                pieces[position] = piece;
+                pieces[position] = pieceDeplacee;
 
-                // Vérifier si le roi est en échec après le mouvement
                 const couleurAdverse = tourActuel === 'blanc' ? 'noir' : 'blanc';
-                if (roiEnEchec(couleurAdverse)) {
-                    alert('Échec !');
-                    // Annuler le mouvement si cela met son propre roi en échec
+                if (roiEnEchec(tourActuel)) {
+                    alert('Ce mouvement met votre roi en échec !');
                     delete pieces[position];
-                    pieces[pieceSelectionnee] = piece;
+                    pieces[pieceSelectionnee] = pieceDeplacee;
+                    if (pieceCible) pieces[position] = pieceCible;
                 } else {
+                    // Mettre à jour la propriété aBouge
+                    pieces[position].aBouge = true;
+
                     // Changer de tour
                     tourActuel = tourActuel === 'blanc' ? 'noir' : 'blanc';
                 }
@@ -166,7 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
             pieceSelectionnee = null;
             creerEchiquier();
         } else if (pieces[position] && pieces[position].couleur === tourActuel) {
-            // Sélectionner une pièce
             pieceSelectionnee = position;
         }
     });
@@ -174,3 +285,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialiser l'échiquier
     creerEchiquier();
 });
+
